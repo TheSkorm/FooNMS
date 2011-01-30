@@ -1,0 +1,11 @@
+Features:
+---------
+  * High-level and low-level network and system diagnostics, statistics and control.
+  * Lightweight. Low memory and CPU usage.
+  * Loosely-coupled, allowing database, web application, daemon and collectors to all reside on different servers.
+  * Written to use commodity hardware, programming languages, protocols and database systems.
+
+More details:
+-------------
+Website:	http://www.fooproject.com.au/products/foonms/
+Support:	http://www.fooproject.com.au/support/
