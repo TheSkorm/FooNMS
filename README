@@ -1,9 +1,31 @@
 Features:
 ---------
-  * High-level and low-level network and system diagnostics, statistics and control.
+  * High-level and low-level network and system diagnostics, statistics and
+    control.
   * Lightweight. Low memory and CPU usage.
-  * Loosely-coupled, allowing database, web application, daemon and collectors to all reside on different servers.
-  * Written to use commodity hardware, programming languages, protocols and database systems.
+  * Loosely-coupled, allowing database, web application, daemon and collectors
+    to all reside on different servers.
+  * Written to use commodity hardware, programming languages, protocols and
+    database systems.
+
+Architectural Overview:
+-----------------------
+	The core of the FooNMS system is the database. This is what all the
+other modules in the system plug into. To maximise compatibility, a MySQL
+database is chosen.
+	The user interface to the management system is a web application,
+implemented in PHP. In later versions a command-line user interface may be
+built, but this is not a priority.
+	Collecting information from the machines in the network as it 
+comes in is the responsibility of the daemon, which apart from a 
+configuration file has no user interface. It collects items from SNMP 
+and Syslog and other sources and commits them to the database.
+	Collectors and Controllers are Python scripts that the user 
+interfaces can control to either collect data or control a machine. They 
+are invoked through the command line. Some of these scripts are slow 
+(such as an snmpwalk), and the user interface tells the user to wait 
+while these are in progress. A better solution is possible, but adds a 
+lot of complexity. 
 
 More details:
 -------------
