@@ -97,6 +97,10 @@
                                 {
                                     echo "Authentication failed. Try again.";
                                 }
+				if(htmlspecialchars($_GET["message"])=="logout")
+                                {
+                                    echo "Successfully logged out.";
+                                }
                             ?>
 			</div>
 		</div>

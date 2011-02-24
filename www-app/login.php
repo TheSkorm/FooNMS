@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 $username = htmlspecialchars($_POST["username"]);
 $password = sha1(htmlspecialchars($_POST["password"]));
@@ -27,7 +28,6 @@ if($abc = mysqli_fetch_row($q))
 	if($password == $dbpassword)
 	{
 		//Start a new session.
-		session_start();
 		$_SESSION['username'] = $username;
 
 		//Redirect to the home page.
