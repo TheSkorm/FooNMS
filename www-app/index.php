@@ -93,6 +93,7 @@
 					<input type="submit" name="submit" value="Submit" />
 				</form>
                             <?php
+				
                                 if(htmlspecialchars($_GET["message"])=="auth-fail")
                                 {
                                     echo "Authentication failed. Try again.";
@@ -100,6 +101,10 @@
 				if(htmlspecialchars($_GET["message"])=="logout")
                                 {
                                     echo "Successfully logged out.";
+                                }
+				if(htmlspecialchars($_GET["message"])=="not-auth")
+                                {
+                                    echo "Not authorised.";
                                 }
                             ?>
 			</div>
