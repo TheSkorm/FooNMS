@@ -39,10 +39,10 @@
 			background-color: transparent;
 			margin-left: -200px;
 			position: absolute;
-			top: -35px;
+			top: -140px;
 			left: 50%;
 			width: 400px;
-			height: 70px;
+			height: 280px;
 			visibility: visible
 		}
 
@@ -85,7 +85,8 @@
 
 		<div id="content">
 			<div class="bodytext">
-				<span class="headline">FooNMS</span><br />
+				<!--<span class="headline">FooNMS</span><br />-->
+                                <img src="./logo-large.png" />
 				<form name="input" action="login.php" method="post">
 					Username: <input type="text" name="username" /><br />
 					Password: <input type="password" name="password" /><br />
@@ -95,14 +96,8 @@
 		</div>
 	</div>
 	
-	<div id="footer"><!--
-		<a href="mailto:jack@jackscott.id.au">Email</a> | 
-		<a href="http://www.facebook.com/JackScottAU">Facebook</a> | 
-		<a href="http://www.fooproject.com.au/">The Foo Project</a> | 
-		<!--<a href="./manifesto/">Manifesto</a> | 
-
-		<a href="./resume.pdf">Résumé</a> | 
-		<a href="http://www.twitter.com/JackScottAU">Twitter</a>-->
+	<div id="footer">
+		Copyright &copy; 2010-2011 The Foo Project.
 	</div>
 </body>
 </html>
