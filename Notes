@@ -1,0 +1,1 @@
+  * password in users in DB is kept in SHA1 format.

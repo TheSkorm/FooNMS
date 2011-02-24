@@ -92,6 +92,12 @@
 					Password: <input type="password" name="password" /><br />
 					<input type="submit" name="submit" value="Submit" />
 				</form>
+                            <?php
+                                if(htmlspecialchars($_GET["message"])=="auth-fail")
+                                {
+                                    echo "Authentication failed. Try again.";
+                                }
+                            ?>
 			</div>
 		</div>
 	</div>
