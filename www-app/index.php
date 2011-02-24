@@ -5,12 +5,12 @@
 	<title>FooNMS - Login</title>
 
 	<meta http-equiv="content-type" content="text/html;charset=ISO-8859-1" />
-	
-	<style type="text/css" media="screen">
-	<!--
+
+        <!--
 	Because I *really* hate it when people do cool CSS tricks on websites and never reveal them, let me share the link-love:
 	http://www.wpdfd.com/editorial/thebox/deadcentre3.html
 	-->
+	<style type="text/css" media="screen">
 		body 
 		{
 			color: #FFFFFF;
@@ -86,8 +86,8 @@
 		<div id="content">
 			<div class="bodytext">
 				<!--<span class="headline">FooNMS</span><br />-->
-                                <img src="./logo-large.png" />
-				<form name="input" action="login.php" method="post">
+                            <img alt="FooNMS Logo"  src="./logo-large.png" />
+				<form id="input" action="login.php" method="post">
 					Username: <input type="text" name="username" /><br />
 					Password: <input type="password" name="password" /><br />
 					<input type="submit" name="submit" value="Submit" />
