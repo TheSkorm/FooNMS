@@ -1,5 +1,5 @@
 <?php
-require_once("includes/user-management.php");
+require_once("includes/user-management.inc");
 
 session_start();
 redirectIfNotLoggedIn();

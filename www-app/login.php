@@ -1,4 +1,7 @@
 <?php
+require_once("includes/user-management.inc");
+require_once("config.inc");
+
 session_start();
 
 $username = htmlspecialchars($_POST["username"]);
@@ -6,12 +9,9 @@ $password = sha1(htmlspecialchars($_POST["password"]));
 
 echo $username." ".$password;
 
-$db_connection = mysqli_connect("localhost","foonms","foonms");
-
-$rowcount = 0;
-
-mysqli_select_db($db_connection,"foonms");
-$q = mysqli_query($db_connection,"select * from users where username = '".$username."';");
+$db_connection = mysqli_connect($FOONMS_DATABASE_SERVER,$FOONMS_DATABASE_USERNAME,$FOONMS_DATABASE_PASSWORD);
+mysqli_select_db($db_connection,$FOONMS_DATABASE_DBNAME);
+$q = mysqli_query($db_connection,"SELECT * FROM users WHERE username = '".$username."';");
 
 if($abc = mysqli_fetch_row($q))
 {
