@@ -13,10 +13,6 @@ $rowcount = 0;
 mysqli_select_db($db_connection,"foonms");
 $q = mysqli_query($db_connection,"select * from users where username = '".$username."';");
 
-
-
-
-
 if($abc = mysqli_fetch_row($q))
 {
 	//Username exists. Password not checked.
@@ -41,24 +37,4 @@ if($abc = mysqli_fetch_row($q))
 	//Username does not exist.
 	header("Location: ./index.php?message=auth-fail");
 }
-
-/*
-while () {
-$rowcount++;
-print "<tr>";
-for ($k=0; $k<count($abc); $k++){
-print "<td>".
-htmlspecialchars($abc[$k]).
-"</td>";
-}
-print "</tr>";
-}
-*/
-//Login to DB.
-//Fetch user record matching the username given. If no records, send fail back to index.
-//If password matches, start session, enter username in session variable.
-//Redirect to home.php.
-
-
-
 ?>
