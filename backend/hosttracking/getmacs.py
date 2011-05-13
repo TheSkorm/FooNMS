@@ -48,9 +48,10 @@ def getmacs(host,community):
 	macs = grabmacs(host,community)
 	bridgeports = grabbridgeports(host,community)
 	portnames = grabportnames(host,community)
+	table = {}
 	for mac in macs:
-		print macs[mac] +" - "+ portnames[str(bridgeports[mac])]
-		
+		table[macs[mac]] = portnames[str(bridgeports[mac])]
+	return(table)		
 #testing
 #print grabmacs("172.27.2.1","public")
 #print grabbridgeports("172.27.2.1","public")
