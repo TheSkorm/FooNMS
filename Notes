@@ -3,3 +3,19 @@
 
 ====== Ideas: ======
   * Suggestion to keep central records of remote access data for plugins, so that it isn't replicated. [TheSkorm]
+
+===== Debian Deps: =====
+  * python-pysnmp2
+  * python-mysqldb
+
+===== SQL: =====
+
+CREATE DATABASE foonms;
+USE foonms;
+
+CREATE TABLE mac(
+ipaddress int unsigned,
+hostname varchar(1000),
+macaddress varchar(20),
+portname varchar (30),
+date datetime);
