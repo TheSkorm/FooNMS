@@ -44,7 +44,7 @@ def grabportnames (host,community): #grabs a list of portnames. returns a portid
 		table[portid.prettyPrint().split(".")[-1]] = portname
 	return(table)
 
-def getdata(host,community):
+def getmacs(host,community):
 	macs = grabmacs(host,community)
 	bridgeports = grabbridgeports(host,community)
 	portnames = grabportnames(host,community)
@@ -55,4 +55,4 @@ def getdata(host,community):
 #print grabmacs("172.27.2.1","public")
 #print grabbridgeports("172.27.2.1","public")
 #print grabportnames("172.27.2.1","public")
-getdata("172.27.2.1","public")
+#getdata("172.27.2.1","public")
