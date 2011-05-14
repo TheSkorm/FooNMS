@@ -19,7 +19,7 @@ def numToDottedQuad(n):
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import mapper, sessionmaker
-engine = create_engine('sqlite:///:memory:', echo=True)
+engine = create_engine('mysql://foonms:foonms@localhost/foonms', echo=True)
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, DateTime
 metadata = MetaData()
 
@@ -29,7 +29,7 @@ Column('hostname', String(50),primary_key=True),
 Column('macaddress', String(50),primary_key=True),
 Column('portname', String(50),primary_key=True),
 Column('switch', Integer(unsigned=True),primary_key=True),
-Column('time', DateTime,primary_key=True)
+Column('time', DateTime)
 )
 
 metadata.create_all(engine) 
@@ -56,6 +56,9 @@ def getdata(switch,community):
 
 	for mac in macs:
 		session = Session()
+		for instance in session.query(trackdata).filter_by(macaddress = mac): 
+			session.delete(instance)
+		session.commit()
 		addtrack = trackdata(None,None,None,None,None,None)
 		if mac in arps: # do this if we have an IP address
 			addtrack.ipaddress = dottedQuadToNum(arps[mac])
@@ -65,11 +68,11 @@ def getdata(switch,community):
 		addtrack.macaddress = mac
 		addtrack.portname = str(macs[mac])
 		addtrack.time = datetime.datetime.utcnow()
-		addtrack.switch = switch
+		addtrack.switch = dottedQuadToNum(switch)
 		#addtrack = trackdata(dottedQuadToNum(arps[mac]), "hostname",mac,macs[mac],time.time())
 		session.add(addtrack)
 		session.commit()
 
 getdata("172.27.2.1","public")
-getdata("172.19.64.254","public")
-getdata("172.19.65.2","public")
+#getdata("172.19.64.254","public")
+#getdata("172.19.65.2","public")
