@@ -19,34 +19,52 @@ def numToDottedQuad(n):
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import mapper, sessionmaker
-engine = create_engine('mysql://foonms:foonms@localhost/foonms', echo=True)
-from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, DateTime
+engine = create_engine('mysql://foonms:foonms@localhost/foonms', echo=False)
+from sqlalchemy import Table, Column, BigInteger, Integer, String, MetaData, ForeignKey, DateTime
 metadata = MetaData()
 
-users_table = Table('tracking', metadata,
-Column('ipaddress', Integer(unsigned=True),primary_key=True),
-Column('hostname', String(50),primary_key=True),
+mac_table = Table('macs', metadata,
 Column('macaddress', String(50),primary_key=True),
 Column('portname', String(50),primary_key=True),
-Column('switch', Integer(unsigned=True),primary_key=True),
+Column('switch', BigInteger(unsigned=True),primary_key=True),
 Column('time', DateTime)
 )
 
+arp_table = Table('arps', metadata,
+Column('macaddress', String(50),primary_key=True),
+Column('ipaddress', BigInteger(unsigned=True),primary_key=True),
+Column('hostname', String(50),primary_key=True),
+Column('router', BigInteger(unsigned=True),primary_key=True),
+Column('time', DateTime)
+)
+
+
 metadata.create_all(engine) 
 
-class trackdata(object):
-	def __init__(self, ipaddress, hostname, macaddress,portname,switch,time):
-		self.ipaddress = ipaddress
-		self.hostname = hostname
+class macdata(object):
+	def __init__(self, macaddress,portname,switch,time):
 		self.macaddress = macaddress
 		self.portname = portname
 		self.switch = switch
 		self.time = time
 
 	def __repr__(self):
-		return "<User('%s','%s', '%s')>" % (self.ipaddress, self.hostname, self.macaddress, self.portname, self.switch, self.time)
+		return "<User('%s','%s', '%s')>" % ( self.macaddress, self.portname, self.switch, self.time)
 
-mapper(trackdata, users_table) 
+class arpdata(object):
+	def __init__(self, macaddress, ipaddress, hostname,router,time):
+		self.macaddress = macaddress
+		self.ipaddress = ipaddress
+		self.hostname = hostname
+		self.router = router
+		self.time = time
+
+	def __repr__(self):
+		return "<User('%s','%s', '%s')>" % ( self.macaddress, self.ipaddress, self.hostname, self.router, self.time)
+
+
+mapper(arpdata, arp_table) 
+mapper(macdata, mac_table) 
 
 Session = sessionmaker(bind=engine)
 
@@ -56,23 +74,35 @@ def getdata(switch,community):
 
 	for mac in macs:
 		session = Session()
-		for instance in session.query(trackdata).filter_by(macaddress = mac): 
+		for instance in session.query(macdata).filter_by(macaddress = mac): 
 			session.delete(instance)
 		session.commit()
-		addtrack = trackdata(None,None,None,None,None,None)
-		if mac in arps: # do this if we have an IP address
-			addtrack.ipaddress = dottedQuadToNum(arps[mac])
-		else: #else we'll just add in the mac address
-			addtrack.ipaddress = 0
-		addtrack.hostname = "TBA"
-		addtrack.macaddress = mac
-		addtrack.portname = str(macs[mac])
-		addtrack.time = datetime.datetime.utcnow()
-		addtrack.switch = dottedQuadToNum(switch)
-		#addtrack = trackdata(dottedQuadToNum(arps[mac]), "hostname",mac,macs[mac],time.time())
-		session.add(addtrack)
+		addmac = macdata(None,None,None,None)
+		print mac
+		addmac.macaddress = mac
+		addmac.portname = str(macs[mac])
+		addmac.time = datetime.datetime.utcnow()
+		addmac.switch = dottedQuadToNum(switch)
+		session.add(addmac)
+		session.commit()
+
+	for mac in arps:
+		session = Session()
+		ip = dottedQuadToNum(arps[mac])
+		for instance in session.query(arpdata).filter_by(ipaddress = ip): 
+			session.delete(instance)
+		session.commit()
+		addarp = arpdata(None,None,None,None, None)
+		addarp.ipaddress = ip
+		print ip
+		addarp.macaddress = mac
+		addarp.hostname = "TBA"
+		addarp.time = datetime.datetime.utcnow()
+		addarp.router = dottedQuadToNum(switch)
+		session.add(addarp)
 		session.commit()
 
 getdata("172.27.2.1","public")
+getdata("172.27.2.43","public")
 #getdata("172.19.64.254","public")
 #getdata("172.19.65.2","public")
