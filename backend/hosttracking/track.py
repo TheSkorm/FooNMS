@@ -78,7 +78,6 @@ def getdata(switch,community):
 			session.delete(instance)
 		session.commit()
 		addmac = macdata(None,None,None,None)
-		print mac
 		addmac.macaddress = mac
 		addmac.portname = str(macs[mac])
 		addmac.time = datetime.datetime.utcnow()
@@ -94,9 +93,11 @@ def getdata(switch,community):
 		session.commit()
 		addarp = arpdata(None,None,None,None, None)
 		addarp.ipaddress = ip
-		print ip
 		addarp.macaddress = mac
-		addarp.hostname = "TBA"
+		try:
+			addarp.hostname = socket.gethostbyaddr(arps[mac])[0]
+		except:
+			addarp.hostname = "Could not resolve"
 		addarp.time = datetime.datetime.utcnow()
 		addarp.router = dottedQuadToNum(switch)
 		session.add(addarp)

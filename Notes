@@ -9,14 +9,3 @@
   * python-mysqldb
   * python-sqlalchemy
 
-===== SQL: =====
-
-CREATE DATABASE foonms;
-USE foonms;
-
-CREATE TABLE mac(
-ipaddress int unsigned,
-hostname varchar(1000),
-macaddress varchar(20),
-portname varchar (30),
-date datetime);
