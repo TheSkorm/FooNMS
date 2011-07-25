@@ -28,7 +28,10 @@ class ip:
 		#return string of 1/0's for debugging
 	def network(self,mask):
 		return 0
-		#given a mask print the network
+		#given a mask return the network, and set the cidr
+	def cidr(self, cidr):
+		# if given a cidr, return the network, and set the network mask
+		return 0
 
 
 print ip(0b1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111000000000000000000).prettyprint()
