@@ -12,14 +12,11 @@ class ip:
 			else:
 				self.ip = ipaddr
 	def prettyprint(self):
+		hexd = '%x' % (self.ip,)
 		if self.ip > 0xffff00000000 and self.ip < 0xffffffffffff:
-			hexd = hex(self.ip)[2:]
-			if hexd[-1] == "L":
-				hexd = hexd[:-1]
-			parts = [hexd[sections:sections+4] for sections in range(0,len(hexd),4)]
+			parts = [hexd[sections:sections+4] for sections in range(0,len(hexd),4)] # this could be cleaned up rather than using the hex could use real numbers and shiz....
 			return "::ffff:" + str(int(parts[-2][:2], 16)) + "." + str(int(parts[-2][2:4], 16)) + "." + str(int(parts[-1][:2], 16)) + "." + str(int(parts[-1][2:4], 16))
 		else:
-			hexd = hex(self.ip)[2:].strip("L")
 			parts = [hexd[sections:sections+4] for sections in range(0,len(hexd),4)]
 			if len(parts)==8:
 				return ":".join(parts)
