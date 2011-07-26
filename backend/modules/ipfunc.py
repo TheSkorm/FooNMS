@@ -5,6 +5,8 @@ class ip:
 		#TODO add in cidr mask as an optional extra variable
 		if ipaddr.__class__ == str:
 			#TODO if a /cidr is included, set that automatically
+			if ipaddr[:7] == '::ffff:':
+				ipaddr = ipaddr[7:]
 			if re.match("^0*([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.0*([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.0*([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.0*([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])$",ipaddr): #regexp to find v4 address
 				ocets = ipaddr.split(".")
 				self.ip = (int(ocets[0])*16777216)+(int(ocets[1])*65536)+(int(ocets[2])*256)+(int(ocets[3])) + 0xffff00000000 # converts array of strings to ints and calculators int, along with adding the rfc part to make it an IPv6 encoded IPv4 address
@@ -55,3 +57,4 @@ print ip("2001:123::").prettyprint()
 print ip("::1").prettyprint()
 print ip("2001:0db8:85a3:0000:0000:8a2e:0370:7334").prettyprint()
 print ip("10.1.1.1").prettyprint()
+print ip("::ffff:10.1.1.1").prettyprint() #TODO fix this
